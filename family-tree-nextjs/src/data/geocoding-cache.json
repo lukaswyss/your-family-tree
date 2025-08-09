@@ -1,0 +1,37 @@
+{
+  "coordinates": {
+    "obfelden, zürich, switzerland": {
+      "lat": 47.2617701,
+      "lng": 8.4197059
+    },
+    "prag, prague, czech republic": {
+      "lat": 50.0596288,
+      "lng": 14.446459273258009
+    },
+    "fulenbach, olten, solothurn, schweiz": {
+      "lat": 47.2737235,
+      "lng": 7.8309213
+    },
+    "kelberg, adenau, rhein, prussia, germany": {
+      "lat": 50.2865636,
+      "lng": 6.9182615
+    },
+    "wassen, uri, swtz.": {
+      "lat": 46.7068488,
+      "lng": 8.5995804
+    },
+    "les breuleux, 2345, jura, espace mittelland, suisse": {
+      "lat": 47.2115671,
+      "lng": 7.0054836
+    },
+    "bavans, 25550, doubs, bourgogne-franche-comté, france": {
+      "lat": 47.4831287,
+      "lng": 6.7297465
+    },
+    "varese, varese, lombardia, italy": {
+      "lat": 45.817549,
+      "lng": 8.8263532
+    }
+  },
+  "lastUpdated": "2025-08-09T21:03:42.293Z"
+}

@@ -1,2 +1,2 @@
 # your-family-tree
-family tree viewer
+family tree viewer for .ged files. 

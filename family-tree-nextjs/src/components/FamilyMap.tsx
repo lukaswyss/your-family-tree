@@ -160,6 +160,8 @@ export function FamilyMap({ individuals }: FamilyMapProps) {
     )
   }
 
+  const hasUnmappedPlaces = mapStats.unmappedPlaces.length > 0
+
   if (birthplaceLocations.length === 0) {
     return (
       <div className="space-y-4">
@@ -181,6 +183,22 @@ export function FamilyMap({ individuals }: FamilyMapProps) {
             <p className="text-2xl font-bold">0</p>
           </div>
         </div>
+        {hasUnmappedPlaces && (
+          <div className="flex items-center gap-3 rounded-lg border border-yellow-300 bg-yellow-50 dark:border-yellow-700 dark:bg-yellow-950 p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-600 dark:text-yellow-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <p className="font-medium text-yellow-800 dark:text-yellow-200">
+                No API key configured
+              </p>
+              <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                {mapStats.unmappedPlaces.length} birthplace{mapStats.unmappedPlaces.length === 1 ? '' : 's'} cannot be mapped without a geocoding API key. Go to{' '}
+                <a href="/settings" className="underline font-medium">Settings</a> to add your OpenWeatherMap API key and geocode locations.
+              </p>
+            </div>
+          </div>
+        )}
         <div className="w-full h-[600px] bg-muted rounded-lg flex items-center justify-center">
           <div className="text-center">
             <p className="text-muted-foreground">No birthplace data with coordinates available</p>
@@ -262,10 +280,15 @@ export function FamilyMap({ individuals }: FamilyMapProps) {
       )}
       
       {mapStats.unmappedPlaces.length > 0 && (
-        <div className="bg-card rounded-lg p-4 border">
-          <h3 className="font-semibold mb-2">Unmapped Birthplaces</h3>
+        <div className="bg-card rounded-lg p-4 border border-yellow-300 dark:border-yellow-700">
+          <div className="flex items-center gap-2 mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-600 dark:text-yellow-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <h3 className="font-semibold">Unmapped Birthplaces</h3>
+          </div>
           <p className="text-sm text-muted-foreground mb-3">
-            These locations could not be mapped. Use the <a href="/settings" className="text-primary hover:underline">Settings page</a> to geocode them:
+            These locations could not be mapped. Add your API key in <a href="/settings" className="text-primary hover:underline font-medium">Settings</a> and geocode them:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {mapStats.unmappedPlaces.map((place, index) => (

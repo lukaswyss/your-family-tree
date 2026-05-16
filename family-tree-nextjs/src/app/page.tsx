@@ -10,6 +10,7 @@ import { clearGeocodingCacheLocal } from '@/lib/geocoding-client'
 
 export default function HomePage() {
   const [search, setSearch] = useState('')
+  const [loadingSample, setLoadingSample] = useState(false)
   const { data, loading, error, refresh, clear } = useFamilyData()
 
   const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +26,23 @@ export default function HomePage() {
       console.error('Failed to read GEDCOM file:', e)
     } finally {
       event.target.value = ''
+    }
+  }, [refresh])
+
+  const handleLoadSample = useCallback(async () => {
+    setLoadingSample(true)
+    try {
+      const response = await fetch('/api/sample')
+      if (!response.ok) throw new Error('Failed to load sample')
+      const text = await response.text()
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('gedcomContent', text)
+      }
+      refresh()
+    } catch (e) {
+      console.error('Failed to load sample GEDCOM:', e)
+    } finally {
+      setLoadingSample(false)
     }
   }, [refresh])
 
@@ -61,11 +79,18 @@ export default function HomePage() {
         <div className="text-center space-y-4">
           <h2 className="text-2xl font-semibold">Upload your GEDCOM file</h2>
           <p className="text-muted-foreground">Select a .ged file to explore your family tree privately in your browser.</p>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center gap-3">
             <label className="inline-flex items-center gap-2 px-4 py-2 border rounded-md cursor-pointer hover:bg-muted">
               <input type="file" accept=".ged,.GED" className="hidden" onChange={handleFileUpload} />
               <span>Choose .ged file</span>
             </label>
+            <Button
+              onClick={handleLoadSample}
+              disabled={loadingSample}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              {loadingSample ? 'Loading...' : 'Load Sample (British Royals)'}
+            </Button>
           </div>
         </div>
       </div>
